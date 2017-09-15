@@ -1,15 +1,14 @@
 import Objects.Color;
-import Objects.Drawing;
 import Objects.DrawingItem;
 import Objects.Point;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-public class Tests {
+public class Tests implements DrawingListener{
     @Test
     void test() {
-        Drawing drawing = new Drawing("Tekening");
+        Drawing drawing = new Drawing("Tekening", this);
         System.out.println("Nieuwe tekening: " + drawing.getName());
         drawing.addPaintedText(Color.RED, new Point(5, 5), 20, 10, "Test", "Comic Sans MS");
         drawing.addOval(Color.BLUE, new Point(10, 10), 10, 8, 2);
@@ -27,5 +26,10 @@ public class Tests {
         for (DrawingItem item : drawing.getItems()) {
             System.out.println(item.toString());
         }
+    }
+
+    @Override
+    public void update() {
+
     }
 }
