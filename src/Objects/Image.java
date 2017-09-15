@@ -1,6 +1,10 @@
 package Objects;
 
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Shape;
+
 import java.io.File;
+import java.io.FileInputStream;
 
 public class Image extends DrawingItem {
     private File _file;
@@ -26,9 +30,7 @@ public class Image extends DrawingItem {
         _height = height;
     }
 
-    public File getFile() {
-        return _file;
-    }
+    private File getFile() { return _file; }
 
     public void setFile(File file) {
         saveState();
@@ -63,5 +65,15 @@ public class Image extends DrawingItem {
     @Override
     public void saveState() {
         setPreviousState(new Image(getColor(), getFile(), getAnchor(), getWidth(), getHeight()));
+    }
+
+    @Override
+    public Object draw() {
+        try {
+            javafx.scene.image.Image i = new javafx.scene.image.Image(new FileInputStream(_file), getWidth(), getHeight(), false, false);
+            return i;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

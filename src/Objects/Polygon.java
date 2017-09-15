@@ -7,7 +7,7 @@ public class Polygon extends DrawingItem {
     private Point[] _vertices;
     private double _weight;
 
-    Polygon(Color color, Point[] vertices, double weight) {
+    public Polygon(Color color, Point[] vertices, double weight) {
         super(color);
         _vertices = vertices;
         _weight = weight;
@@ -86,5 +86,19 @@ public class Polygon extends DrawingItem {
     @Override
     public void saveState() {
         setPreviousState(new Polygon(getColor(), getVertices(), getWeight()));
+    }
+
+    @Override
+    public Object draw() {
+        Double[] points = new Double[getVertices().length * 2];
+        int i = 0;
+        for (Point p : getVertices()) {
+            points[i++] = p.getX();
+            points[i++] = p.getY();
+        }
+
+        javafx.scene.shape.Polygon p = new javafx.scene.shape.Polygon();
+        p.getPoints().addAll(points);
+        return p;
     }
 }

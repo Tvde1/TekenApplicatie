@@ -9,8 +9,9 @@ public abstract class DrawingItem implements Comparable<DrawingItem> {
     public abstract double getWidth();
     public abstract double getHeight();
     public abstract void saveState();
+    public abstract Object draw();
 
-    public Color getColor() { return _color; }
+    Color getColor() { return _color; }
     public void setColor(Color color) {
         saveState();
         _color = color;
@@ -21,7 +22,7 @@ public abstract class DrawingItem implements Comparable<DrawingItem> {
     }
 
     public DrawingItem getPreviousState() { return _previousState; }
-    public void setPreviousState(DrawingItem previousState) { _previousState = previousState; }
+    void setPreviousState(DrawingItem previousState) { _previousState = previousState; }
 
     @Override
     public String toString() {

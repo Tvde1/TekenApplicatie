@@ -1,5 +1,8 @@
 package Objects;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 public class PaintedText extends DrawingItem {
     private Point _anchor;
     private double _width;
@@ -63,5 +66,12 @@ public class PaintedText extends DrawingItem {
     @Override
     public void saveState() {
         setPreviousState(new PaintedText(getColor(), getAnchor(), getWidth(), getHeight(), getContent(), getFontName()));
+    }
+
+    @Override
+    public Object draw() {
+        Text text = new Text(getAnchor().getX(), getAnchor().getY(), getContent());
+        text.setFont(new Font(getFontName(), getWidth() / getContent().length()));
+        return text;
     }
 }

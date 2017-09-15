@@ -1,12 +1,14 @@
 package Objects;
 
+import javafx.scene.shape.Ellipse;
+
 public class Oval extends DrawingItem {
     private Point _anchor;
     private double _width;
     private double _height;
     private double _weight;
 
-    Oval(Color color, Point anchor, double width, double height, double weight) {
+    public Oval(Color color, Point anchor, double width, double height, double weight) {
         super(color);
         _anchor = anchor;
         _width = width;
@@ -59,5 +61,15 @@ public class Oval extends DrawingItem {
     @Override
     public String toString() {
         return "Oval        - Anchor: (" + _anchor.toString() + ") | Weight: " + _weight + " | " + super.toString();
+    }
+
+    @Override
+    public Object draw() {
+        Ellipse e = new Ellipse();
+        e.setCenterX(getAnchor().getX() + getWidth() / 2);
+        e.setCenterY(getAnchor().getY() + getHeight() / 2);
+        e.setRadiusX(getWidth() / 2);
+        e.setRadiusY(getHeight() / 2);
+        return e;
     }
 }
