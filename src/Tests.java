@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-public class Tests implements DrawingListener{
+class Tests {
     @Test
     void test() {
-        Drawing drawing = new Drawing("Tekening", this);
+        Drawing drawing = new Drawing("Tekening");
         System.out.println("Nieuwe tekening: " + drawing.getName());
         drawing.addPaintedText(Color.RED, new Point(5, 5), 20, 10, "Test", "Comic Sans MS");
         drawing.addOval(Color.BLUE, new Point(10, 10), 10, 8, 2);
@@ -26,10 +26,5 @@ public class Tests implements DrawingListener{
         for (DrawingItem item : drawing.getItems()) {
             System.out.println(item.toString());
         }
-    }
-
-    @Override
-    public void update() {
-
     }
 }
