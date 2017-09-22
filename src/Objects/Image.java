@@ -1,6 +1,8 @@
 package Objects;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.io.File;
@@ -68,11 +70,15 @@ public class Image extends DrawingItem {
     }
 
     @Override
-    public Object draw() {
+    public Shape draw() {
+        System.out.println("test");
         try {
             javafx.scene.image.Image i = new javafx.scene.image.Image(new FileInputStream(_file), getWidth(), getHeight(), false, false);
-            return i;
+            Rectangle rec = new Rectangle(getAnchor().getX(), getAnchor().getY(), getWidth(), getHeight());
+            rec.setFill(new ImagePattern(i));
+            return rec;
         } catch (Exception e) {
+            System.out.println(e.toString());
             return null;
         }
     }
