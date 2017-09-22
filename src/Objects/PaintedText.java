@@ -1,5 +1,6 @@
 package Objects;
 
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -69,7 +70,7 @@ public class PaintedText extends DrawingItem {
     }
 
     @Override
-    public Object draw() {
+    public Shape draw() {
         Text text = new Text(getAnchor().getX(), getAnchor().getY(), getContent());
         text.setFont(new Font(getFontName(), getWidth() / getContent().length()));
         return text;

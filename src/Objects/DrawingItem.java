@@ -1,5 +1,7 @@
 package Objects;
 
+import javafx.scene.shape.Shape;
+
 public abstract class DrawingItem implements Comparable<DrawingItem> {
 
     private Color _color;
@@ -9,7 +11,7 @@ public abstract class DrawingItem implements Comparable<DrawingItem> {
     public abstract double getWidth();
     public abstract double getHeight();
     public abstract void saveState();
-    public abstract Object draw();
+    public abstract Shape draw();
 
     Color getColor() { return _color; }
     public void setColor(Color color) {

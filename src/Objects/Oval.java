@@ -1,6 +1,7 @@
 package Objects;
 
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 
 public class Oval extends DrawingItem {
     private Point _anchor;
@@ -64,7 +65,7 @@ public class Oval extends DrawingItem {
     }
 
     @Override
-    public Object draw() {
+    public Shape draw() {
         Ellipse e = new Ellipse();
         e.setCenterX(getAnchor().getX() + getWidth() / 2);
         e.setCenterY(getAnchor().getY() + getHeight() / 2);

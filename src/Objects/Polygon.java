@@ -1,5 +1,7 @@
 package Objects;
 
+import javafx.scene.shape.Shape;
+
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -89,7 +91,7 @@ public class Polygon extends DrawingItem {
     }
 
     @Override
-    public Object draw() {
+    public Shape draw() {
         Double[] points = new Double[getVertices().length * 2];
         int i = 0;
         for (Point p : getVertices()) {
