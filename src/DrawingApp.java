@@ -19,6 +19,7 @@ import java.util.*;
 public class DrawingApp extends Application implements Observer {
     private Scene _scene;
     private Drawing _drawing;
+    private PersistencyMediator _persistencyMediator = new SerialisationMediator();
 
     /**
      * @param primaryStage
@@ -26,6 +27,12 @@ public class DrawingApp extends Application implements Observer {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        Drawing loadedDrawing = _persistencyMediator.load("drawing1");
+
+        _drawing = loadedDrawing;
+
+
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.setTitle("Hello World");
         Scene scene = new Scene(root, 800, 500);
@@ -36,27 +43,33 @@ public class DrawingApp extends Application implements Observer {
         fillColorDropdown();
         addButtonEvents();
 
-        _drawing = new Drawing("Drawing1");
+        if (loadedDrawing == null) {
+            _drawing = new Drawing("Drawing1");
+        }
+
         _drawing.addObserver(this);
 
-        _drawing.addOval(Color.BLUE, new Point(30, 4), 30, 50, 10);
-        _drawing.addOval(Color.BLUE, new Point(4, 5), 20, 10, 5);
 
-        Point[] vertices = new Point[] {
-                new Point(80, 50),
-                new Point(40, 80),
-                new Point(55, 100),
-                new Point(80, 100)
-        };
-
-        _drawing.addPolygon(Color.GREEN, vertices, 40);
-        //_drawing.clear();
-        //_drawing.addPolygon(Color.BLUE, vertices, 40);
-
-        _drawing.addPaintedText(Color.RED, new Point(400, 200), 400, 400, "Test", "Comic Sans MS");
-
-        _drawing.addImage(Color.BLUE, new File("D:\\temp\\old-man-with-a-phone.jpg"), new Point(100, 100), 200, 150);
+//        _drawing.addOval(Color.BLUE, new Point(30, 4), 30, 50, 10);
+//        _drawing.addOval(Color.BLUE, new Point(4, 5), 20, 10, 5);
+//
+//        Point[] vertices = new Point[] {
+//                new Point(80, 50),
+//                new Point(40, 80),
+//                new Point(55, 100),
+//                new Point(80, 100)
+//        };
+//
+//        _drawing.addPolygon(Color.GREEN, vertices, 40);
+//        //_drawing.clear();
+//        //_drawing.addPolygon(Color.BLUE, vertices, 40);
+//
+//        _drawing.addPaintedText(Color.RED, new Point(400, 200), 400, 400, "Test", "Comic Sans MS");
+//
+//        _drawing.addImage(Color.BLUE, new File("D:\\temp\\old-man-with-a-phone.jpg"), new Point(100, 100), 200, 150);
         // setMouseClickHandler(scene);
+
+        update(null, null);
     }
 
     private void addButtonEvents() {
@@ -107,9 +120,10 @@ public class DrawingApp extends Application implements Observer {
     public void update(Observable o, Object arg) {
         draw();
         showItems();
+        _persistencyMediator.save(_drawing);
     }
 
-    void btnRemove_Click(MouseEvent mouseEvent) {
+    private void btnRemove_Click(MouseEvent mouseEvent) {
         Parent r = _scene.getRoot();
         Node l =  r.lookup("#lvItems");
         ListView lv = (ListView) l;
@@ -117,7 +131,7 @@ public class DrawingApp extends Application implements Observer {
         _drawing.remove(item);
     }
 
-    void btnAdd_Click(MouseEvent mouseEvent) {
+    private void btnAdd_Click(MouseEvent mouseEvent) {
         ChoiceBox cbShape = (ChoiceBox) _scene.getRoot().lookup("#cbShape");
         ChoiceBox cbColor = (ChoiceBox) _scene.getRoot().lookup("#cbColor");
         double x = Double.parseDouble(((TextField)_scene.getRoot().lookup("#tbX")).getText());
