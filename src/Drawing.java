@@ -1,11 +1,12 @@
 import Objects.*;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
 
-public class Drawing extends Observable {
+public class Drawing extends Observable implements Serializable {
     private ArrayList<DrawingItem> _items = new ArrayList<>();
     private String _name;
 

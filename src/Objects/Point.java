@@ -1,6 +1,8 @@
 package Objects;
 
-public class Point {
+import java.io.Serializable;
+
+public class Point implements Serializable {
     private double _x;
     private double _y;
 

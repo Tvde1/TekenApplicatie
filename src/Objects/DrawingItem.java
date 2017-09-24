@@ -2,7 +2,9 @@ package Objects;
 
 import javafx.scene.shape.Shape;
 
-public abstract class DrawingItem implements Comparable<DrawingItem> {
+import java.io.Serializable;
+
+public abstract class DrawingItem implements Comparable<DrawingItem>, Serializable {
 
     private Color _color;
     private DrawingItem _previousState;
