@@ -15,6 +15,21 @@ public abstract class DrawingItem implements Comparable<DrawingItem>, Serializab
     public abstract void saveState();
     public abstract Shape draw();
 
+    public boolean overlaps(DrawingItem item) {
+        Point middleThis = new Point(getAnchor().getX() + getWidth() / 2, getAnchor().getY() + getHeight() / 2);
+        Point middleItem = new Point(item.getAnchor().getX() + item.getWidth() / 2, item.getAnchor().getY() + item.getHeight() / 2);
+
+        boolean overlapsX = Math.abs(middleThis.getX() - middleItem.getX()) - getWidth() - item.getWidth() <= 0;
+        boolean overlapsY = Math.abs(middleThis.getY() - middleItem.getY()) - getHeight() - item.getHeight() <= 0;
+
+        return overlapsX && overlapsY;
+    }
+
+    public boolean insideBoundingBox(Point point) {
+        boolean betweenX = point.getX() > getAnchor().getX() && point.getX() < getAnchor().getX() + getWidth();
+        boolean betweenY = point.getY() > getAnchor().getY() && point.getY() < getAnchor().getY() + getHeight();
+    }
+
     Color getColor() { return _color; }
     public void setColor(Color color) {
         saveState();
