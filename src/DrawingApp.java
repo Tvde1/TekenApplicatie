@@ -28,10 +28,12 @@ public class DrawingApp extends Application implements Observer {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Drawing loadedDrawing = _persistencyMediator.load("drawing1");
+        _drawing = _persistencyMediator.load("drawing1");
 
-        _drawing = loadedDrawing;
+        if (_drawing == null)
+            _drawing = new Drawing("drawing1");
 
+        _drawing.addObserver(this);
 
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.setTitle("Hello World");
@@ -39,15 +41,10 @@ public class DrawingApp extends Application implements Observer {
         _scene = scene;
         primaryStage.setScene(scene);
         primaryStage.show();
+
         fillShapeDropdown();
         fillColorDropdown();
         addButtonEvents();
-
-        if (loadedDrawing == null) {
-            _drawing = new Drawing("Drawing1");
-        }
-
-        _drawing.addObserver(this);
 
 
 //        _drawing.addOval(Color.BLUE, new Point(30, 4), 30, 50, 10);
@@ -125,7 +122,7 @@ public class DrawingApp extends Application implements Observer {
 
     private void btnRemove_Click(MouseEvent mouseEvent) {
         Parent r = _scene.getRoot();
-        Node l =  r.lookup("#lvItems");
+        Node l = r.lookup("#lvItems");
         ListView lv = (ListView) l;
         DrawingItem item = (DrawingItem) lv.getSelectionModel().getSelectedItem();
         _drawing.remove(item);
@@ -134,10 +131,10 @@ public class DrawingApp extends Application implements Observer {
     private void btnAdd_Click(MouseEvent mouseEvent) {
         ChoiceBox cbShape = (ChoiceBox) _scene.getRoot().lookup("#cbShape");
         ChoiceBox cbColor = (ChoiceBox) _scene.getRoot().lookup("#cbColor");
-        double x = Double.parseDouble(((TextField)_scene.getRoot().lookup("#tbX")).getText());
-        double y = Double.parseDouble(((TextField)_scene.getRoot().lookup("#tbY")).getText());
-        double width = Double.parseDouble(((TextField)_scene.getRoot().lookup("#tbWidth")).getText());
-        double height = Double.parseDouble(((TextField)_scene.getRoot().lookup("#tbHeight")).getText());
+        double x = Double.parseDouble(((TextField) _scene.getRoot().lookup("#tbX")).getText());
+        double y = Double.parseDouble(((TextField) _scene.getRoot().lookup("#tbY")).getText());
+        double width = Double.parseDouble(((TextField) _scene.getRoot().lookup("#tbWidth")).getText());
+        double height = Double.parseDouble(((TextField) _scene.getRoot().lookup("#tbHeight")).getText());
         double weight = ((Slider) _scene.getRoot().lookup("#slWeight")).getValue();
 
         TextField tbFile = (TextField) _scene.getRoot().lookup("#tbFile");
@@ -151,7 +148,7 @@ public class DrawingApp extends Application implements Observer {
 
         switch ((String) cbShape.getSelectionModel().getSelectedItem()) {
             case "Image": {
-                _drawing.addImage(c, file, anchor,width, height);
+                _drawing.addImage(c, file, anchor, width, height);
                 break;
             }
             case "Oval": {
